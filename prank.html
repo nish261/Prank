@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Treasure Map Viewer™</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #001f3f;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    video {
+      max-width: 90%;
+      max-height: 80%;
+      border: 5px solid #ffdc00;
+      border-radius: 12px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      background: #ff4136;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform .2s;
+    }
+    button:hover { transform: scale(1.1); }
+  </style>
+</head>
+<body>
+  <h1>Loading Treasure Map…</h1>
+
+  <div id="overlay">
+    <video id="crabVid" autoplay loop muted playsinline>
+      <!-- Dancing crab Rick-roll -->
+      <source src="https://cdn.jsdelivr.net/gh/waylaidwanderer/DancingCrabRickRoll/dancing-crab-rickroll.mp4" type="video/mp4">
+      Your browser be too old for this treasure.
+    </video>
+    <button onclick="window.close()">Fine, ye got me!</button>
+  </div>
+
+  <script>
+    // Request mic & camera (harmless)
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      .then(() => {
+        document.querySelector('h1').textContent = "Permission granted… or be ye fooled?";
+        setTimeout(() => {
+          document.getElementById('overlay').style.display = 'flex';
+          document.getElementById('crabVid').muted = false; // UNLEASH THE SHANTY!
+        }, 1500);
+      })
+      .catch(() => {
+        // Even if they deny, still rick-roll
+        document.querySelector('h1').textContent = "Deny all ye want, the crab cares not!";
+        setTimeout(() => document.getElementById('overlay').style.display = 'flex', 1500);
+      });
+  </script>
+</body>
+</html> 
